@@ -9,9 +9,20 @@ export function middleware(request: NextRequest, event: NextFetchEvent) {
         if (request.cookies.has('userToken')) {
             return NextResponse.redirect(new URL('/user', request.nextUrl.origin))
         }
-    } else if (request.nextUrl.pathname.startsWith('/user')) {
+    }
+    else if (['/admin/login', '/admin/register'].includes(request.nextUrl.pathname)) {
+        if (request.cookies.has('adminToken')) {
+            return NextResponse.redirect(new URL('/admin', request.nextUrl.origin))
+        }
+    }
+    else if (request.nextUrl.pathname.startsWith('/user')) {
         if (!request.cookies.has('userToken')) {
             return NextResponse.redirect(new URL('/user/login', request.nextUrl.origin))
+        }
+    }
+    else if (request.nextUrl.pathname.startsWith('/admin')) {
+        if (!request.cookies.has('adminToken')) {
+            return NextResponse.redirect(new URL('/admin/login', request.nextUrl.origin))
         }
     }
 

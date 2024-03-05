@@ -20,6 +20,12 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from '../../store';
+import { getAuthLoading } from '../../store/selector/admin.selector';
+import { useRouter } from 'next/navigation';
+import { Button } from '@mui/material';
+import withRedux from '../withStore';
 
 const drawerWidth = 240;
 
@@ -92,7 +98,7 @@ const navItems = [
 ]
 
 
-export default function AdminLayout(prop: any) {
+export default withRedux(function AdminLayout(prop: any) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -103,6 +109,23 @@ export default function AdminLayout(prop: any) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  // Theme --------------
+
+  const dispatch = useDispatch<Dispatch>()
+  const isAuthLoading = useSelector(getAuthLoading);
+  React.useEffect(() => {
+    console.log("useeffect empty");
+    dispatch.adminStore.verifyToken({});
+  }, [isAuthLoading])
+  const router = useRouter();
+  function handleLogout() {
+    dispatch.adminStore.logout();
+    router.replace("/admin/login")
+  }
+  if (isAuthLoading) {
+    return (<><Button onClick={handleLogout}>Go to login</Button></>)
+  }
+
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -119,7 +142,7 @@ export default function AdminLayout(prop: any) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+            Admin Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -164,4 +187,4 @@ export default function AdminLayout(prop: any) {
       </Main>
     </Box>
   );
-}
+})
