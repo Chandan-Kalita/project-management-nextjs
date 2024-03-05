@@ -105,23 +105,27 @@ const navItems = [
 
 export default withRedux(function UserLayout(prop: any) {
     const dispatch = useDispatch<Dispatch>()
+    const isAuthLoading = useSelector(getAuthLoading);
+
+    // Theme------------
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const isAuthLoading = useSelector(getAuthLoading);
     const handleDrawerOpen = () => {
         setOpen(true);
     };
-
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    // Theme------------
+
+
+
     // React.useEffect(() => {
 
     // }, [isAuthLoading])
-
     React.useEffect(() => {
         dispatch.userStore.verifyToken({});
-    }, [])
+    }, [isAuthLoading])
     const router = useRouter();
     function handleLogout() {
         dispatch.userStore.logout();
@@ -145,7 +149,7 @@ export default withRedux(function UserLayout(prop: any) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        Persistent drawer
+                        User Dashboard
                     </Typography>
                 </Toolbar>
             </AppBar>
