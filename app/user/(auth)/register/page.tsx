@@ -13,21 +13,31 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import withRedux from '../../../../components/withStore';
+import theme from '../../../../theme';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from '../../../../store';
+import { getLoggedInStatus } from '../../../../store/selector/user.selector';
+import { redirect } from 'next/navigation';
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+const defaultTheme = theme;
 
-export default function SignIn() {
+export default withRedux(function Register() {
+    const dispatch = useDispatch<Dispatch>();
+    const loggedIn = useSelector(getLoggedInStatus)
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        let data: any = new FormData(event.currentTarget);
+        data = { name: data.get('name'), email: data.get('email'), phoneNumber: data.get('phoneNumber'), password: data.get('password') };
+        dispatch.userStore.register(data)
     };
-
+    React.useEffect(() => {
+        if (loggedIn) {
+            redirect("/user/")
+        }
+    }, [loggedIn])
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
@@ -44,9 +54,19 @@ export default function SignIn() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Register
+                        Create an account
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="name"
+                            label="Your Name"
+                            name="name"
+
+                            autoFocus
+                        />
                         <TextField
                             margin="normal"
                             required
@@ -54,7 +74,16 @@ export default function SignIn() {
                             id="email"
                             label="Email Address"
                             name="email"
-                            autoComplete="email"
+
+                            autoFocus
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="phoneNumber"
+                            label="Phone Number"
+                            name="phoneNumber"
                             autoFocus
                         />
                         <TextField
@@ -65,7 +94,7 @@ export default function SignIn() {
                             label="Password"
                             type="password"
                             id="password"
-                            autoComplete="current-password"
+                            autoComplete='current-password'
                         />
                         <Button
                             type="submit"
@@ -73,12 +102,12 @@ export default function SignIn() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            Register
                         </Button>
                         <Grid container>
                             <Grid item>
                                 <Link href="#" variant="body2">
-                                    {"Don't have an account? Sign Up"}
+                                    {"Already have an account? Sign In"}
                                 </Link>
                             </Grid>
                         </Grid>
@@ -87,4 +116,4 @@ export default function SignIn() {
             </Container>
         </ThemeProvider>
     );
-}
+})

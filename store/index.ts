@@ -1,25 +1,31 @@
-import {init, Models, RematchDispatch, RematchRootState} from "@rematch/core";
-import loadingPlugin, {ExtraModelsFromLoading} from "@rematch/loading";
-import updatedPlugin, {ExtraModelsFromUpdated} from "@rematch/updated";
+import { init, Models, RematchDispatch, RematchRootState } from "@rematch/core";
+import loadingPlugin, { ExtraModelsFromLoading } from "@rematch/loading";
+import updatedPlugin, { ExtraModelsFromUpdated } from "@rematch/updated";
 import immerPlugin from "@rematch/immer";
 import typedStatePlugin from "@rematch/typed-state";
-import {useMemo} from "react";
+import { useMemo } from "react";
 import selectPlugin from "@rematch/select";
 import 'reflect-metadata';
 import CommonStore from "./models/common.model";
+import UserStore from "./models/user.model";
+import AdminStore from "./models/admin.model";
 
 let store: any
 let select
 
 export interface RootModel extends Models<RootModel> {
     commonStore: typeof CommonStore,
+    userStore: typeof UserStore,
+    adminStore: typeof AdminStore
 }
 
 const models: RootModel = {
     commonStore: CommonStore,
+    userStore: UserStore,
+    adminStore: AdminStore
 }
 
-type LoadingModel = ExtraModelsFromLoading<RootModel, {type: 'full'}>
+type LoadingModel = ExtraModelsFromLoading<RootModel, { type: 'full' }>
 
 type UpdatedModel = ExtraModelsFromUpdated<RootModel>
 
@@ -35,7 +41,7 @@ export const initStore = (initialState: any) =>
             immerPlugin(),
             selectPlugin(),
             typedStatePlugin(),
-            loadingPlugin({type: 'full'}),
+            loadingPlugin({ type: 'full' }),
             updatedPlugin()]
     })
 

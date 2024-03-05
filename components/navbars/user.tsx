@@ -20,6 +20,13 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Link from 'next/link';
+import withRedux from '../withStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAuthLoading } from '../../store/selector/user.selector';
+import { Dispatch } from '../../store';
+import { Button } from '@mui/material';
+import { deleteCookie } from 'cookies-next';
+import { redirect, useRouter } from 'next/navigation';
 
 const drawerWidth = 240;
 
@@ -96,10 +103,11 @@ const navItems = [
 ]
 
 
-export default function UserLayout(prop: any) {
+export default withRedux(function UserLayout(prop: any) {
+    const dispatch = useDispatch<Dispatch>()
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-
+    const isAuthLoading = useSelector(getAuthLoading);
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -107,7 +115,21 @@ export default function UserLayout(prop: any) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    // React.useEffect(() => {
 
+    // }, [isAuthLoading])
+
+    React.useEffect(() => {
+        dispatch.userStore.verifyToken({});
+    }, [])
+    const router = useRouter();
+    function handleLogout() {
+        dispatch.userStore.logout();
+        router.replace("/user/login")
+    }
+    if (isAuthLoading) {
+        return (<><Button onClick={handleLogout}>Go to login</Button></>)
+    }
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
@@ -163,9 +185,9 @@ export default function UserLayout(prop: any) {
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
-                {/* content */}
                 {prop.children}
             </Main>
         </Box>
     );
-}
+})
+
