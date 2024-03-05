@@ -16,10 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <>
-    <AdminLayout></AdminLayout>
-    <Container>
-      {children}
-    </Container>
+      <AdminLayout>
+        {children}
+
+      </AdminLayout>
     </>
   )
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "@/app/globals.css";
+import UserLayout from "../../../components/navbars/user";
 
 export const metadata: Metadata = {
   title: "User App",
@@ -12,5 +12,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return children;
+  return (
+    <>
+      <UserLayout>
+        {children}
+
+      </UserLayout>
+    </>
+  )
 }
