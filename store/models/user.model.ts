@@ -12,7 +12,8 @@ type User = {
         email: string,
         phoneNumber?: string,
         name?: string,
-    } | null
+    } | null,
+    showToast: boolean
 }
 const UserStore = createModel<RootModel>()({
     state: {

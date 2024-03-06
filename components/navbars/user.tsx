@@ -24,9 +24,11 @@ import withRedux from '../withStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuthLoading } from '../../store/selector/user.selector';
 import { Dispatch } from '../../store';
-import { Button } from '@mui/material';
+import { Button, Slide, Snackbar } from '@mui/material';
 import { deleteCookie } from 'cookies-next';
 import { redirect, useRouter } from 'next/navigation';
+import { getToastInfo } from '../../store/selector/common.selector';
+import { useEffect } from 'react';
 
 const drawerWidth = 240;
 
@@ -152,6 +154,7 @@ export default withRedux(function UserLayout(prop: any) {
                         User Dashboard
                     </Typography>
                 </Toolbar>
+
             </AppBar>
             <Drawer
                 sx={{
@@ -191,6 +194,7 @@ export default withRedux(function UserLayout(prop: any) {
                 <DrawerHeader />
                 {prop.children}
             </Main>
+
         </Box>
     );
 })
