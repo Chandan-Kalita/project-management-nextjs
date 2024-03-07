@@ -9,6 +9,7 @@ import 'reflect-metadata';
 import CommonStore from "./models/common.model";
 import UserStore from "./models/user.model";
 import AdminStore from "./models/admin.model";
+import ProposalStore from "./models/proposal.model";
 
 let store: any
 let select
@@ -16,13 +17,15 @@ let select
 export interface RootModel extends Models<RootModel> {
     commonStore: typeof CommonStore,
     userStore: typeof UserStore,
-    adminStore: typeof AdminStore
+    adminStore: typeof AdminStore,
+    proposalStore: typeof ProposalStore
 }
 
 const models: RootModel = {
     commonStore: CommonStore,
     userStore: UserStore,
-    adminStore: AdminStore
+    adminStore: AdminStore,
+    proposalStore: ProposalStore
 }
 
 type LoadingModel = ExtraModelsFromLoading<RootModel, { type: 'full' }>

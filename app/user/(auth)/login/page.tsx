@@ -87,7 +87,7 @@ export default withRedux(function UserLogin() {
                         </Button>
                         <Grid container>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/user/register" variant="body2">
                                     {"Already have an account? Sign In"}
                                 </Link>
                             </Grid>
