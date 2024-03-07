@@ -19,7 +19,7 @@ export default function Home() {
       <div className="grid grid-cols-4 gap-3">
         {Object.keys(proposalCounts).map((val: string) => {
           return (
-            <Card variant="outlined">
+            <Card key={val} variant="outlined">
               <CardContent>
                 <Typography variant="h5" component="div" className=" capitalize">
                   {val.toLowerCase()} Proposals

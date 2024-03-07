@@ -6,9 +6,9 @@ export default function Home() {
   return (
     <>
       <div className="grid grid-cols-4 gap-3">
-        {[1, 2, 3, 4].map(() => {
+        {[1, 2, 3, 4].map((val) => {
           return (
-            <Card variant="outlined">
+            <Card key={val} variant="outlined">
               <CardContent>
                 <Typography variant="h5" component="div">
                   All Proposals
