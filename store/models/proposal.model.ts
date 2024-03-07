@@ -31,10 +31,14 @@ const ProposalStore = createModel<RootModel>()({
                 dispatch.proposalStore.setSubmitMsg({ status: true, msg: response.statusText })
             } catch (error) {
                 console.log(error);
-                if (error.response) {
-                    dispatch.proposalStore.setSubmitMsg({ status: false, msg: error.response.data.message })
+                if (error instanceof AxiosError) {
+                    if (error.response) {
+                        dispatch.proposalStore.setSubmitMsg({ status: false, msg: error.response.data.message })
+                    } else {
+                        dispatch.proposalStore.setSubmitMsg({ status: false, msg: error.message })
+                    }
                 } else {
-                    dispatch.proposalStore.setSubmitMsg({ status: false, msg: error.message })
+                    dispatch.proposalStore.setSubmitMsg({ status: false, msg: "Something went wrong" })
                 }
             }
         },
