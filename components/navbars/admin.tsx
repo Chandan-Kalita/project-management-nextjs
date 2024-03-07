@@ -81,20 +81,20 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const navItems = [
   {
     text: "All Proposals",
-    link: "#"
-  },
-  {
+    link: "/admin/all-proposals"
+},
+{
     text: "Pending Proposals",
-    link: "#"
-  },
-  {
+    link: "/admin/pending-proposals"
+},
+{
     text: "Rejected Proposals",
-    link: "#"
-  },
-  {
+    link: "/admin/rejected-proposals"
+},
+{
     text: "Approved Proposals",
-    link: "#"
-  },
+    link: "/admin/approved-proposals"
+},
 ]
 
 

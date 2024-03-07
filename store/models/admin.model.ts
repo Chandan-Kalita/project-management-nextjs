@@ -11,7 +11,10 @@ type Admin = {
     token: string,
     isAuthLoading: boolean,
     loggedIn: boolean,
-    proposalCounts: {ACCEPTED:number, REJECTED:number, PENDING:number, ALL:number}
+    proposalCounts: {ACCEPTED:number, REJECTED:number, PENDING:number, ALL:number},
+    proposalList: any,
+    proposalCount: number,
+    proposalStatusChanged:{status:boolean, msg:string},
 }
 const AdminStore = createModel<RootModel>()({
     state: {
@@ -22,7 +25,10 @@ const AdminStore = createModel<RootModel>()({
         token: "",
         loggedIn: false,
         isAuthLoading: true,
-        proposalCounts:{ACCEPTED:0,REJECTED:0,PENDING:0,ALL:0}
+        proposalCounts:{ACCEPTED:0,REJECTED:0,PENDING:0,ALL:0},
+        proposalList: [],
+        proposalCount: 0,
+        proposalStatusChanged:{status:false, msg:""},
     } as Admin,
     reducers: {
         setAdmin: (state, payload) => {
@@ -43,6 +49,18 @@ const AdminStore = createModel<RootModel>()({
         },
         setProposalCounts: (state, payload)=>{
             state.proposalCounts = payload
+            return state
+        },
+        setProposalList: (state, payload) => {
+            state.proposalList = payload
+            return state
+        },
+        setProposalCount: (state, payload) => {
+            state.proposalCount = payload
+            return state
+        },
+        setProposalStatusChanged:(state,payload)=>{
+            state.proposalStatusChanged = payload
             return state
         }
     },
@@ -91,6 +109,31 @@ const AdminStore = createModel<RootModel>()({
                 dispatch.adminStore.setProposalCounts(data)
             } catch (error) {
                 
+            }
+        },
+        async getProposals(payload, state) {
+
+            try {
+                dispatch.adminStore.setProposalList([])
+                dispatch.adminStore.setProposalCount(0)
+                const response = await axiosContainer.adminAxios.post("/proposal/get", payload)
+                let data = response.data;
+                dispatch.adminStore.setProposalList(data.proposals)
+                dispatch.adminStore.setProposalCount(data.count)
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async submitProposalStatus(payload, state){
+            try {
+                dispatch.adminStore.setProposalStatusChanged({status:false, msg:""})
+                const response = await axiosContainer.adminAxios.post("/proposal/change-status", payload)
+                let data = response.data;
+                dispatch.adminStore.setProposalStatusChanged({status:true, msg:"Status updated successfully"})
+            } catch (error) {
+                console.log(error);
+                dispatch.adminStore.setProposalStatusChanged({status:true, msg:"Status update failed"})
             }
         }
     })
