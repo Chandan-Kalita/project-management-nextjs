@@ -7,19 +7,19 @@ import { useDispatch, useSelector } from "react-redux"
 import { Dispatch } from "../../../../store"
 import { getProposalCount, getProposals } from "../../../../store/selector/proposal.selector"
 
-function ApprovedProposals() {
+function AllProposals() {
     const dispatch = useDispatch<Dispatch>();
     const proposals = useSelector(getProposals);
     const proposalCount = useSelector(getProposalCount)
     useEffect(() => {
         console.log("ran");
-        dispatch.proposalStore.getProposals({ proposalStatus: "ACCEPTED" })
+        dispatch.proposalStore.getProposals({})
     }, [])
     console.log(proposals);
     return (
         <Container>
             <div className="flex justify-between">
-                <Typography variant="h5" gutterBottom>Approved Proposals</Typography>
+                <Typography variant="h5" gutterBottom>All Proposals</Typography>
                 <Typography variant="h6" gutterBottom>Total Proposals : {proposalCount}</Typography>
             </div>
 
@@ -57,4 +57,4 @@ function ApprovedProposals() {
     )
 }
 
-export default ApprovedProposals
+export default AllProposals

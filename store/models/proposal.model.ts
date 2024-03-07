@@ -9,18 +9,30 @@ type ProposalState = {
     createProposalMsg: {
         status: boolean,
         msg: string
-    }
+    },
+    proposalList: any,
+    proposalCount: number
 }
 const ProposalStore = createModel<RootModel>()({
     state: {
         submitCount: 0,
-        createProposalMsg: {}
+        createProposalMsg: {},
+        proposalList: [],
+        proposalCount: 0
     } as ProposalState,
     reducers: {
         setSubmitMsg: (state, payload) => {
             state.createProposalMsg = payload
             return state
         },
+        setProposalList: (state, payload) => {
+            state.proposalList = payload
+            return state
+        },
+        setProposalCount: (state, payload) => {
+            state.proposalCount = payload
+            return state
+        }
     },
     effects: (dispatch) => ({
 
@@ -42,6 +54,18 @@ const ProposalStore = createModel<RootModel>()({
                 }
             }
         },
+
+        async getProposals(payload, state) {
+            try {
+                const response = await axiosContainer.post("/proposal/get", payload)
+                let data = response.data;
+                dispatch.proposalStore.setProposalList(data.proposals)
+                dispatch.proposalStore.setProposalCount(data.count)
+            } catch (error) {
+                console.log(error);
+
+            }
+        }
 
     })
 })
