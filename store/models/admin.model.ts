@@ -10,7 +10,8 @@ type Admin = {
     } | null,
     token: string,
     isAuthLoading: boolean,
-    loggedIn: boolean
+    loggedIn: boolean,
+    proposalCounts: {ACCEPTED:number, REJECTED:number, PENDING:number, ALL:number}
 }
 const AdminStore = createModel<RootModel>()({
     state: {
@@ -21,6 +22,7 @@ const AdminStore = createModel<RootModel>()({
         token: "",
         loggedIn: false,
         isAuthLoading: true,
+        proposalCounts:{ACCEPTED:0,REJECTED:0,PENDING:0,ALL:0}
     } as Admin,
     reducers: {
         setAdmin: (state, payload) => {
@@ -38,12 +40,16 @@ const AdminStore = createModel<RootModel>()({
         setIsAuthLoading: (state, payload) => {
             state.isAuthLoading = payload
             return state
+        },
+        setProposalCounts: (state, payload)=>{
+            state.proposalCounts = payload
+            return state
         }
     },
     effects: (dispatch) => ({
         async login(payload, state) {
             try {
-                const response = await axiosContainer.post('/user/sign-in', payload)
+                const response = await axiosContainer.adminAxios.post('/user/sign-in', payload)
                 const token = response.data.access_token;
                 setCookie('adminToken', token);
                 dispatch.adminStore.setToken(token);
@@ -56,7 +62,7 @@ const AdminStore = createModel<RootModel>()({
         async verifyToken(payload, state) {
             try {
                 let token = getCookie("adminToken");
-                const response = await axiosContainer.get('/user/authorize', { params: { token } })
+                const response = await axiosContainer.adminAxios.get('/user/authorize', { params: { token } })
                 let data = response.data;
                 if (data.id && data.userType == "ADMIN") {
                     dispatch.adminStore.setIsAuthLoading(false);
@@ -77,6 +83,15 @@ const AdminStore = createModel<RootModel>()({
             dispatch.adminStore.setToken("")
             dispatch.adminStore.setLoggedIn(false);
 
+        },
+        async getProposalCounts(){
+            try {
+                const response = await axiosContainer.adminAxios.get('/proposal/get-proposal-counts')
+                const data = response.data
+                dispatch.adminStore.setProposalCounts(data)
+            } catch (error) {
+                
+            }
         }
     })
 })

@@ -38,7 +38,7 @@ const ProposalStore = createModel<RootModel>()({
 
         async submitProposal(payload, state) {
             try {
-                const response = await axiosContainer.post('/proposal', payload)
+                const response = await axiosContainer.userAxios.post('/proposal', payload)
                 let data = response.data;
                 dispatch.proposalStore.setSubmitMsg({ status: true, msg: response.statusText })
             } catch (error) {
@@ -57,15 +57,14 @@ const ProposalStore = createModel<RootModel>()({
 
         async getProposals(payload, state) {
             try {
-                const response = await axiosContainer.post("/proposal/get", payload)
+                const response = await axiosContainer.userAxios.post("/proposal/get", payload)
                 let data = response.data;
                 dispatch.proposalStore.setProposalList(data.proposals)
                 dispatch.proposalStore.setProposalCount(data.count)
             } catch (error) {
                 console.log(error);
-
             }
-        }
+        },
 
     })
 })

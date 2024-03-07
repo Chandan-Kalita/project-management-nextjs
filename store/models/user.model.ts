@@ -48,7 +48,7 @@ const UserStore = createModel<RootModel>()({
     effects: (dispatch) => ({
         async register(payload, state) {
             try {
-                const response = await axiosContainer.post('/user', payload)
+                const response = await axiosContainer.userAxios.post('/user', payload)
                 const token = response.data.access_token;
                 setCookie('userToken', token);
                 dispatch.userStore.setToken(token);
@@ -59,7 +59,7 @@ const UserStore = createModel<RootModel>()({
         },
         async login(payload, state) {
             try {
-                const response = await axiosContainer.post('/user/sign-in', payload)
+                const response = await axiosContainer.userAxios.post('/user/sign-in', payload)
                 const token = response.data.access_token;
                 setCookie('userToken', token);
                 dispatch.userStore.setToken(token);
@@ -72,7 +72,7 @@ const UserStore = createModel<RootModel>()({
         async verifyToken(payload, state) {
             try {
                 let token = getCookie("userToken");
-                const response = await axiosContainer.get('/user/authorize', { params: { token } })
+                const response = await axiosContainer.userAxios.get('/user/authorize', { params: { token } })
                 let data = response.data;
                 if (data.id) {
                     dispatch.userStore.setIsAuthLoading(false);

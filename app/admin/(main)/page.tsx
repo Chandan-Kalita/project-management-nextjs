@@ -1,12 +1,23 @@
+"use client"
+import { Dispatch } from "@/store";
+import { getProposalCounts } from "@/store/selector/admin.selector";
 import { Box, Button, Card, CardActions, CardContent, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
+  const dispatch = useDispatch<Dispatch>();
+  const proposalCounts = useSelector(getProposalCounts)
+  useEffect(()=>{
+    dispatch.adminStore.getProposalCounts();
+  },[])
+  
   return (
     <>
       <div className="grid grid-cols-4 gap-3">
-        {[1, 2, 3, 4].map(() => {
+        {["ALL","ACCEPTED", "PENDING","REJECTED"].map((val:any) => {
           return (
             <Card variant="outlined">
               <CardContent>
@@ -14,7 +25,7 @@ export default function Home() {
                   All Proposals
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  10
+                  {proposalCounts[val]}
                 </Typography>
               </CardContent>
               <CardActions>
