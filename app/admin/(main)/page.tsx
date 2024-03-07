@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <>
       <div className="grid grid-cols-4 gap-3">
-        {["ALL","ACCEPTED", "PENDING","REJECTED"].map((val:string) => {
+        {Object.keys(proposalCounts).map((val: string) => {
           return (
             <Card variant="outlined">
               <CardContent>
@@ -25,7 +25,7 @@ export default function Home() {
                   {val.toLowerCase()} Proposals
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  {proposalCounts[val]}
+                {proposalCounts[val as keyof typeof proposalCounts]}
                 </Typography>
               </CardContent>
               <CardActions>

@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Dispatch } from "../../../../store"
 import { getProposalCount, getProposals } from "../../../../store/selector/proposal.selector"
+import Link from "next/link"
 
 function RejectedProposals() {
     const dispatch = useDispatch<Dispatch>();
@@ -32,6 +33,7 @@ function RejectedProposals() {
                             <TableCell align="left">Objective</TableCell>
                             <TableCell align="right">Budget</TableCell>
                             <TableCell align="center">Status</TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -47,6 +49,7 @@ function RejectedProposals() {
                                 <TableCell align="left">{row.objective}</TableCell>
                                 <TableCell align="right">{row.budget}</TableCell>
                                 <TableCell align="center">{row.status}</TableCell>
+                                <TableCell align="center"><Link className=" text-blue-600 hover:underline" href={`/user/proposal-details/${row.id}`}>Actions</Link></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
