@@ -8,7 +8,7 @@ import { Dispatch } from '../store'
 import { getToastInfo } from '../store/selector/common.selector'
 import CloseIcon from '@mui/icons-material/Close';
 import { getSubmitMsg } from '../store/selector/proposal.selector'
-export default function MyDropzone() {
+export default function MyDropzone({heading}:{heading?:string}) {
     const [photo, setPhoto] = React.useState(null)
     const [address_proof, setAddressProof] = useState(null)
     const [income_proof, setIncomeProof] = useState(null)
@@ -68,7 +68,7 @@ export default function MyDropzone() {
                     <CloseIcon fontSize="small" />
                 </IconButton>}
             />
-            <Typography variant='h6' className='pb-5'>Upload documents</Typography>
+            <Typography variant='h6' className='pb-5'>{heading?heading:"Upload Documents"}</Typography>
             <div className='grid grid-cols-2 gap-y-3 gap-x-[100px]'>
                 <div className="flex items-center justify-between">
                     <label htmlFor="">Photo</label>

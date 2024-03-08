@@ -156,13 +156,13 @@ export default function ProposalDetails({ params }: { params: { id: string } }) 
             <hr className="my-5" />
             <Typography className="relative" variant="h5">
                 Project Title : {proposalDetails.project_title}
-            <RedDot niddle="project_title" haystack={proposalDetails.rejectionReason} />
+                <RedDot niddle="project_title" haystack={proposalDetails.rejectionReason} />
 
-                </Typography>
+            </Typography>
             <hr className="my-5" />
             <div className="relative">
-            Project Description : {proposalDetails.project_description}
-            <RedDot niddle="project_description" haystack={proposalDetails.rejectionReason} />
+                Project Description : {proposalDetails.project_description}
+                <RedDot niddle="project_description" haystack={proposalDetails.rejectionReason} />
 
             </div>
             <hr className="my-5" />
@@ -184,35 +184,35 @@ export default function ProposalDetails({ params }: { params: { id: string } }) 
                     <RedDot niddle="district" haystack={proposalDetails.rejectionReason} />
                 </div>
                 <div className="relative">Ifsc Code: {proposalDetails.ifsc_code}
-                <RedDot niddle="ifsc_code" haystack={proposalDetails.rejectionReason} />
-                
+                    <RedDot niddle="ifsc_code" haystack={proposalDetails.rejectionReason} />
+
                 </div>
                 <div className="relative">Account Number: {proposalDetails.account_number}
-                <RedDot niddle="account_number" haystack={proposalDetails.rejectionReason} />
+                    <RedDot niddle="account_number" haystack={proposalDetails.rejectionReason} />
                 </div>
                 <div className="relative">Income Source: {proposalDetails.income_source}
-                <RedDot niddle="income_source" haystack={proposalDetails.rejectionReason} />
-                
+                    <RedDot niddle="income_source" haystack={proposalDetails.rejectionReason} />
+
                 </div>
                 <div className="relative">Income: {proposalDetails.income} Lpa
-                <RedDot niddle="income" haystack={proposalDetails.rejectionReason} />
-                
+                    <RedDot niddle="income" haystack={proposalDetails.rejectionReason} />
+
                 </div>
                 <div className="relative">Land Size: {proposalDetails.land_size} sq ft
-                <RedDot niddle="land_size" haystack={proposalDetails.rejectionReason} />
-                
+                    <RedDot niddle="land_size" haystack={proposalDetails.rejectionReason} />
+
                 </div>
                 <div className="relative"><Link className=" text-blue-600 hover:underline" target="_blank" href={proposalDetails.photo_path}>Photo</Link>
-                <RedDot niddle="photo" haystack={proposalDetails.rejectionReason} />
-                
+                    <RedDot niddle="photo" haystack={proposalDetails.rejectionReason} />
+
                 </div>
                 <div className="relative"><Link className=" text-blue-600 hover:underline" target="_blank" href={proposalDetails.address_proof_path}>Address Proof</Link>
-                <RedDot niddle="address_proof" haystack={proposalDetails.rejectionReason} />
-                
+                    <RedDot niddle="address_proof" haystack={proposalDetails.rejectionReason} />
+
                 </div>
                 <div className="relative"><Link className=" text-blue-600 hover:underline" target="_blank" href={proposalDetails.income_proof_path}>Income Proof</Link>
-                <RedDot niddle="income_proof" haystack={proposalDetails.rejectionReason} />
-                
+                    <RedDot niddle="income_proof" haystack={proposalDetails.rejectionReason} />
+
                 </div>
 
             </div>
