@@ -16,38 +16,6 @@ async function fetchProposalData(id: string) {
         console.log({ error });
         return null;
     }
-    // return {
-    //     id: "8e96e693-bb51-41d2-8789-31c7395a9752",
-    //     project_title: "Project Title",
-    //     project_description: "Project Description",
-    //     objective: "Objective",
-    //     duration: 2,
-    //     budget: 3,
-    //     state: "Assam",
-    //     district: "District",
-    //     bank_name: "Bank Name",
-    //     ifsc_code: "ifsc_code",
-    //     account_number: "123456",
-    //     income_source: "income_source",
-    //     income: "123",
-    //     land_size: 12,
-    //     photo_path: "https://firebasestorage.googleapis.com/v0/b/jrpl-dev.appspot.com/o/chandan_test%2F73e86437-45d7-4e7e-bef7-e4bb4b645174banner-3_720.jpg?alt=media&token=40ff38bb-8af8-4d56-8ff4-5614c45aa450",
-    //     address_proof_path: "https://firebasestorage.googleapis.com/v0/b/jrpl-dev.appspot.com/o/chandan_test%2F1cc11b35-e5a9-4b26-9a58-791b4dd0fe4bbanner-3.jpg?alt=media&token=b17b74b4-91fe-47a8-aac9-679161bc5d1c",
-    //     income_proof_path: "https://firebasestorage.googleapis.com/v0/b/jrpl-dev.appspot.com/o/chandan_test%2F211fb550-e626-4303-a195-28f38ccc043ebanner-3_720.jpg?alt=media&token=4453ec4c-7042-493d-84cb-7d7c8896508d",
-    //     user_id: "07e526e6-afa2-49e4-b12c-ba4b3571c0cc",
-    //     prevVersionId: null,
-    //     status: "PENDING",
-    //     adminComment: null,
-    //     rejectionReason: [],
-    //     user: {
-    //         id: "07e526e6-afa2-49e4-b12c-ba4b3571c0cc",
-    //         phoneNumber: "1234567890",
-    //         name: "Bhaskar",
-    //         email: "bhaskar@gmail.com",
-    //         password: "$2b$10$XJF7OKlutY8iOLdJmkmjEOhA2rq0qt633FmQKK3LlLXPPuW1vAp6G",
-    //         userType: "USER"
-    //     }
-    // }
 }
 const rejectionReasons = [
     {
@@ -225,6 +193,8 @@ export default function ProposalDetails({ params }: { params: { id: string } }) 
             {proposalDetails.status == "PENDING" ? <ProposalActions handleSubmit={handleSubmit} /> : <div className="flex items-center">
                 Status : <Typography className="!ml-2" variant="h6">{proposalDetails.status}</Typography>
             </div>}
+            { proposalDetails.prevVersionId ? <Link className=" text-blue-600 hover:underline" href={"/admin/proposal-details/"+proposalDetails.prevVersionId}>View Previous Version</Link> : ""}
+
             {
                 proposalDetails.status == "REJECTED"
                     ?

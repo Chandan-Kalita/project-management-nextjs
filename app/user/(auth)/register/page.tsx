@@ -64,7 +64,7 @@ export default withRedux(function Register() {
                             id="name"
                             label="Your Name"
                             name="name"
-
+                            InputLabelProps={{shrink:true}}
                             autoFocus
                         />
                         <TextField
@@ -74,7 +74,7 @@ export default withRedux(function Register() {
                             id="email"
                             label="Email Address"
                             name="email"
-
+                            InputLabelProps={{shrink:true}}
                             autoFocus
                         />
                         <TextField
@@ -85,6 +85,8 @@ export default withRedux(function Register() {
                             label="Phone Number"
                             name="phoneNumber"
                             autoFocus
+                            InputLabelProps={{shrink:true}}
+
                         />
                         <TextField
                             margin="normal"
@@ -95,6 +97,8 @@ export default withRedux(function Register() {
                             type="password"
                             id="password"
                             autoComplete='current-password'
+                            InputLabelProps={{shrink:true}}
+
                         />
                         <Button
                             type="submit"

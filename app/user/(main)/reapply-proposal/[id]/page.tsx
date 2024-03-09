@@ -14,8 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 async function fetchProposalData(id: string) {
     try {
         const response = await axiosService.userAxios.get("/proposal/" + id);
-        const data = response.data
-        if(data.status != "PENDING"){
+        const data =  response.data
+        if(data.status != "REJECTED"){
             return null;
         }
         return data;
@@ -127,12 +127,12 @@ export default function ProposalDetails({ params }: { params: { id: string } }) 
             formData.delete("address_proof")
         }
         formData.append("id",params.id)
-        dispatch.proposalStore.updateProposal(formData)
+        dispatch.proposalStore.reapplyProposal(formData)
         
     }
     return proposalDetails && (
         <Container>
-            <Typography variant="h5" gutterBottom>Update Proposal</Typography>
+            <Typography variant="h5" gutterBottom>Reapply Proposal</Typography>
             {submitMsg.msg ? <AlertComponent text={submitMsg.msg} severity={submitMsg.status ? "success" : "error"} /> : ''}
                 <Box onSubmit={handleSubmit} component="form" ref={formRef}>
                     <FormControlComponent

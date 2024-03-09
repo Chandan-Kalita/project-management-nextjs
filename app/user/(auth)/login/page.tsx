@@ -64,7 +64,7 @@ export default withRedux(function UserLogin() {
                             id="email"
                             label="Email Address"
                             name="email"
-
+                            InputLabelProps={{shrink:true}}
                             autoFocus
                         />
                         <TextField
@@ -73,6 +73,7 @@ export default withRedux(function UserLogin() {
                             fullWidth
                             name="password"
                             label="Password"
+                            InputLabelProps={{shrink:true}}
                             type="password"
                             id="password"
                             autoComplete='current-password'

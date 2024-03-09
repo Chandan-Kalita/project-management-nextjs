@@ -64,7 +64,7 @@ export default withRedux(function AdminLogin() {
                             id="email"
                             label="Email Address"
                             name="email"
-
+                            InputLabelProps={{shrink:true}}
                             autoFocus
                         />
                         <TextField
@@ -76,6 +76,7 @@ export default withRedux(function AdminLogin() {
                             type="password"
                             id="password"
                             autoComplete='current-password'
+                            InputLabelProps={{shrink:true}}
                         />
                         <Button
                             type="submit"

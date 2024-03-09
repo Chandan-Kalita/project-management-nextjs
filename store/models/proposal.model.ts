@@ -40,6 +40,25 @@ const ProposalStore = createModel<RootModel>()({
             try {
                 const response = await axiosContainer.userAxios.post('/proposal', payload)
                 let data = response.data;
+                dispatch.proposalStore.setSubmitMsg({ status: true, msg: "Success" })
+            } catch (error) {
+                console.log(error);
+                // if (error instanceof AxiosError) {
+                //     if (error.response) {
+                //         dispatch.proposalStore.setSubmitMsg({ status: false, msg: error.response.data.message })
+                //     } else {
+                //         dispatch.proposalStore.setSubmitMsg({ status: false, msg: error.message })
+                //     }
+                // } else {
+                // }
+                dispatch.proposalStore.setSubmitMsg({ status: false, msg: "Something went wrong" })
+            }
+        },
+
+        async updateProposal(payload, state) {
+            try {
+                const response = await axiosContainer.userAxios.post('/proposal/update', payload)
+                let data = response.data;
                 dispatch.proposalStore.setSubmitMsg({ status: true, msg: response.statusText })
             } catch (error) {
                 console.log(error);
@@ -55,9 +74,10 @@ const ProposalStore = createModel<RootModel>()({
             }
         },
 
-        async updateProposal(payload, state) {
+
+        async reapplyProposal(payload, state) {
             try {
-                const response = await axiosContainer.userAxios.post('/proposal/update', payload)
+                const response = await axiosContainer.userAxios.post('/proposal/reapply', payload)
                 let data = response.data;
                 dispatch.proposalStore.setSubmitMsg({ status: true, msg: response.statusText })
             } catch (error) {

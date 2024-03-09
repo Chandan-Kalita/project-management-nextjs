@@ -162,8 +162,9 @@ export default function ProposalDetails({ params }: { params: { id: string } }) 
             <hr className="my-5" />
 
             <div className="flex items-center">
-                Status : <Typography className="!ml-2" variant="h6">{proposalDetails.status}</Typography> {["REJECTED","PENDING"].includes(proposalDetails.status) ? <Link href={"/user/edit-proposal/"+proposalDetails.id} className="ml-2"><Button variant="contained" color="info">Edit</Button></Link> : ""}
+                Status : <Typography className="!ml-2" variant="h6">{proposalDetails.status}</Typography> {["REJECTED","PENDING"].includes(proposalDetails.status) ? <Link href={`/user/${proposalDetails.status == "REJECTED" ? "reapply":"edit"}-proposal/`+proposalDetails.id} className="ml-2"><Button variant="contained" color="info">{proposalDetails.status == "REJECTED"?" Try Again ":"Edit"}</Button></Link> : ""}
             </div>
+            { proposalDetails.prevVersionId ? <Link className=" text-blue-600 hover:underline" href={"/user/proposal-details/"+proposalDetails.prevVersionId}>View Previous Version</Link> : ""}
             {
                 proposalDetails.status == "REJECTED"
                     ?

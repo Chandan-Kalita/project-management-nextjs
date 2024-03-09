@@ -60,7 +60,7 @@ function CreateProposal() {
                     <FormControlComponent
                         variant="standard"
                         id="duration"
-                        // type="number"
+                        type="number"
                         name="duration"
                         label="Duration"
                     // defaultVal={2}
