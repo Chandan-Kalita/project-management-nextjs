@@ -8,7 +8,7 @@ import { getSubmitMsg } from "@/store/selector/proposal.selector";
 import axiosService from "@/utils/axios.service";
 import { Box, Button, Container, FormControl, FormLabel, Grid, InputLabel, MenuItem, Select, TextField, TextareaAutosize, Typography } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation";
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 async function fetchProposalData(id: string) {
@@ -96,9 +96,11 @@ export default function ProposalDetails({ params }: { params: { id: string } }) 
     const dispatch = useDispatch<Dispatch>();
     const formRef:any = useRef(null);
     const submitMsg = useSelector(getSubmitMsg);
+    const router = useRouter();
     useEffect(() => {
         if (submitMsg.status) {
-            formRef?.current?.reset();
+            // formRef?.current?.reset();
+            router.push("/user/rejected-proposals")
         }
         scrollTo(0, 0)
     }, [submitMsg])
@@ -126,6 +128,9 @@ export default function ProposalDetails({ params }: { params: { id: string } }) 
         if(!address_proof?.name){
             formData.delete("address_proof")
         }
+        // formData.forEach((v,k)=>console.log(k,v));
+        // return;
+        
         formData.append("id",params.id)
         dispatch.proposalStore.reapplyProposal(formData)
         
@@ -135,106 +140,106 @@ export default function ProposalDetails({ params }: { params: { id: string } }) 
             <Typography variant="h5" gutterBottom>Reapply Proposal</Typography>
             {submitMsg.msg ? <AlertComponent text={submitMsg.msg} severity={submitMsg.status ? "success" : "error"} /> : ''}
                 <Box onSubmit={handleSubmit} component="form" ref={formRef}>
-                    <FormControlComponent
+                    {proposalDetails.rejectionReason.includes("project_title") ? <FormControlComponent
                         variant="standard"
                         id="project-title"
                         name="project_title"
                         label="Project Title"
                         defaultVal={proposalDetails.project_title}
-                    />
-                    <FormControlComponent
+                    />:""}
+                    {proposalDetails.rejectionReason.includes("project_description") ? <FormControlComponent
                         variant="standard"
                         id="project-description"
                         name="project_description"
                         label="Project Description"
                         defaultVal={proposalDetails.project_description}
-                    />
+                    />:""}
 
-                    <FormControlComponent
+                    {proposalDetails.rejectionReason.includes("objective") ? <FormControlComponent
                         variant="standard"
                         id="objective"
                         name="objective"
                         label="Objective"
                         defaultVal={proposalDetails.objective}
-                    />
-                    <FormControlComponent
+                    />:""}
+                    {proposalDetails.rejectionReason.includes("duration") ? <FormControlComponent
                         variant="standard"
                         id="duration"
                         type="number"
                         name="duration"
                         label="Duration"
                     defaultVal={proposalDetails.duration}
-                    />
+                    />:""}
 
-                    <FormControlComponent
+                    {proposalDetails.rejectionReason.includes("budget") ? <FormControlComponent
                         variant="standard"
                         id="budget"
                         type="number"
                         name="budget"
                         label="budget"
                         defaultVal={proposalDetails.budget}
-                    />
+                    />:""}
 
-                    <FormControlComponent
+                    {proposalDetails.rejectionReason.includes("state") ? <FormControlComponent
                         variant="standard"
                         id="state"
                         name="state"
                         label="State"
                         defaultVal={proposalDetails.state}
-                    />
-                    <FormControlComponent
+                    />:""}
+                    {proposalDetails.rejectionReason.includes("district") ? <FormControlComponent
                         variant="standard"
                         id="district"
                         name="district"
                         label="District"
                         defaultVal={proposalDetails.district}
-                    />
+                    />:""}
 
-                    <FormControlComponent
+                    {proposalDetails.rejectionReason.includes("bank_name") ? <FormControlComponent
                         variant="standard"
                         id="bank-name"
                         name="bank_name"
                         label="Bank Name"
                         defaultVal={proposalDetails.bank_name}
                         // defaultVal="Bank Name"
-                    />
+                    />:""}
 
-                    <FormControlComponent
+                    {proposalDetails.rejectionReason.includes("ifsc_code") ? <FormControlComponent
                         variant="standard"
                         label="IFSC Code"
                         id="ifsc-code"
                         name="ifsc_code"
                         defaultVal={proposalDetails.ifsc_code}
-                    />
-                    <FormControlComponent variant="standard"
+                    />:""}
+                    {proposalDetails.rejectionReason.includes("account_number") ? <FormControlComponent variant="standard"
                         label="Account Number"
                         id="account-number"
                         name="account_number"
                         type="number"
                         defaultVal={proposalDetails.account_number}
-                    />
-                    <FormControlComponent variant="standard"
+                    />:""}
+                    {proposalDetails.rejectionReason.includes("income_source") ? <FormControlComponent variant="standard"
                         label="Income Source"
                         id="income-source"
                         name="income_source"
                         defaultVal={proposalDetails.income_source}
-                    />
-                    <FormControlComponent variant="standard"
+                    />:""}
+                    {proposalDetails.rejectionReason.includes("income") ? <FormControlComponent variant="standard"
                         label="Income per year in lakh"
                         id="income"
                         name="income"
                         type="number"
                         defaultVal={proposalDetails.income}
-                    />
-                    <FormControlComponent variant="standard"
+                    />:""}
+                    {proposalDetails.rejectionReason.includes("land_size") ? <FormControlComponent variant="standard"
                         label="Land Size (square foot)"
                         id="land-size"
                         name="land_size"
                         type="number"
                         defaultVal={proposalDetails.land_size}
-                    />
+                    />:""}
                     
-                    <MyDropzone heading="Upload Documents (leave empty if you don't want to change)"></MyDropzone>
+                    <MyDropzone fieldToShow={proposalDetails.rejectionReason} heading="Upload Documents (leave empty if you don't want to change)"></MyDropzone>
                     <Button variant="contained" type="submit">Submit</Button>
                 </Box>
            
