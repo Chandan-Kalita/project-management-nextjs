@@ -234,7 +234,7 @@ export default function ProposalDetails({ params }: { params: { id: string } }) 
                         defaultVal={proposalDetails.land_size}
                     />
                     
-                    <MyDropzone heading="Upload Documents (leave empty if you don't want to change)"></MyDropzone>
+                    <MyDropzone fieldToShow={undefined} heading="Upload Documents (leave empty if you don't want to change)"></MyDropzone>
                     <Button variant="contained" type="submit">Submit</Button>
                 </Box>
            

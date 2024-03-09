@@ -132,7 +132,7 @@ function CreateProposal() {
                         type="number"
                     // defaultVal={12}
                     />
-                    <MyDropzone></MyDropzone>
+                    <MyDropzone fieldToShow={undefined}></MyDropzone>
                     <Button variant="contained" type="submit">Submit</Button>
                 </Box>
             </Box>
